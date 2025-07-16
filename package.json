@@ -1,0 +1,43 @@
+{
+  "name": "async-tasks-queue",
+  "version": "1.0.0",
+  "description": "A simple and efficient async tasks queue for Node.js with TypeScript support",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc --project ./tsconfig.build.json --pretty",
+    "test": "jest --project ./tsconfig.json --detectOpenHandles --runInBand",
+    "prepublishOnly": "npm run build",
+    "dev-tsc": "tsc --project ./tsconfig.json --watch --pretty",
+    "dev": "jest --project ./tsconfig.json --watchAll --detectOpenHandles --runInBand"
+  },
+  "keywords": [
+    "async",
+    "queue",
+    "tasks",
+    "typescript",
+    "nodejs",
+    "promise",
+    "sequential"
+  ],
+  "author": "",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/async-tasks-queue.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yourusername/async-tasks-queue/issues"
+  },
+  "homepage": "https://github.com/yourusername/async-tasks-queue#readme",
+  "devDependencies": {
+    "@types/jest": "^30.0.0",
+    "jest": "^30.0.4",
+    "ts-jest": "^29.4.0",
+    "typescript": "^5.8.3"
+  }
+}
