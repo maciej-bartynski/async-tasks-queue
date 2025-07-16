@@ -1,39 +1,39 @@
 # Async Tasks Queue
 
-Prosta i wydajna kolejka zadań asynchronicznych dla Node.js z obsługą TypeScript.
+A simple and efficient async tasks queue for Node.js with TypeScript support.
 
-## Instalacja
+## Installation
 
 ```bash
 npm install async-tasks-queue
 ```
 
-## Użycie
+## Usage
 
-### Podstawowe użycie
+### Basic Usage
 
 ```typescript
 import AsyncTasksQueue from 'async-tasks-queue';
 
 const queue = new AsyncTasksQueue();
 
-// Dodaj zadania do kolejki
+// Add tasks to the queue
 const task1 = queue.enqueue(async () => {
   await new Promise(resolve => setTimeout(resolve, 1000));
-  return 'Zadanie 1 ukończone';
+  return 'Task 1 completed';
 });
 
 const task2 = queue.enqueue(async () => {
   await new Promise(resolve => setTimeout(resolve, 500));
-  return 'Zadanie 2 ukończone';
+  return 'Task 2 completed';
 });
 
-// Zadania będą wykonywane sekwencyjnie
-const result1 = await task1; // Czeka 1 sekundę
-const result2 = await task2; // Czeka dodatkowe 0.5 sekundy
+// Tasks will be executed sequentially
+const result1 = await task1; // Waits 1 second
+const result2 = await task2; // Waits additional 0.5 seconds
 ```
 
-### Użycie z obsługą błędów
+### Usage with Error Handling
 
 ```typescript
 import AsyncTasksQueue from 'async-tasks-queue';
@@ -42,59 +42,63 @@ const queue = new AsyncTasksQueue();
 
 try {
   const result = await queue.enqueue(async () => {
-    // Symulacja błędu
-    throw new Error('Coś poszło nie tak');
+    // Simulate an error
+    throw new Error('Something went wrong');
   });
 } catch (error) {
-  console.error('Błąd w zadaniu:', error.message);
+  console.error('Task error:', error.message);
 }
 ```
 
-### Przykład z wieloma zadaniami
+### Example with Multiple Tasks
 
 ```typescript
 import AsyncTasksQueue from 'async-tasks-queue';
 
 const queue = new AsyncTasksQueue();
 
-// Funkcja symulująca pracę z bazą danych
+// Function simulating database operation
 async function simulateDatabaseOperation(id: number): Promise<string> {
   await new Promise(resolve => setTimeout(resolve, Math.random() * 1000));
-  return `Operacja ${id} ukończona`;
+  return `Operation ${id} completed`;
 }
 
-// Dodaj wiele zadań
+// Add multiple tasks
 const tasks = [];
 for (let i = 1; i <= 5; i++) {
   tasks.push(queue.enqueue(() => simulateDatabaseOperation(i)));
 }
 
-// Wszystkie zadania będą wykonywane sekwencyjnie
+// All tasks will be executed sequentially
 const results = await Promise.all(tasks);
 console.log(results);
-// Output: ['Operacja 1 ukończona', 'Operacja 2 ukończona', ...]
+// Output: ['Operation 1 completed', 'Operation 2 completed', ...]
 ```
 
 ## API
 
 ### `enqueue<T>(task: () => Promise<T>): Promise<T>`
 
-Dodaje zadanie do kolejki i zwraca Promise, który zostanie rozwiązany po ukończeniu zadania.
+Adds a task to the queue and returns a Promise that will be resolved when the task completes.
 
-**Parametry:**
-- `task`: Funkcja asynchroniczna zwracająca Promise
+**Parameters:**
+- `task`: Async function returning a Promise
 
-**Zwraca:**
-- Promise, który zostanie rozwiązany z wynikiem zadania lub odrzucony z błędem
+**Returns:**
+- Promise that will be resolved with the task result or rejected with an error
 
-## Funkcje
+## Features
 
-- **Sekwencyjne wykonywanie**: Wszystkie zadania są wykonywane jeden po drugim
-- **Obsługa błędów**: Błędy w zadaniach są prawidłowo propagowane
-- **TypeScript**: Pełna obsługa typów TypeScript
-- **Lekka**: Minimalne zależności, tylko `uuid` jako zależność produkcyjna
-- **Prosta**: Intuicyjne API bez skomplikowanej konfiguracji
+- **Sequential execution**: All tasks are executed one after another
+- **Error handling**: Errors in tasks are properly propagated
+- **TypeScript**: Full TypeScript type support
+- **Lightweight**: Zero production dependencies
+- **Simple**: Intuitive API without complex configuration
 
-## Licencja
+## Development
+
+For developers working on this package, see [`docs/DEVELOPMENT.md`](docs/DEVELOPMENT.md) for detailed technical documentation, project structure, configuration details, and development workflow. This file serves as a comprehensive guide for AI assistants and developers working with the codebase.
+
+## License
 
 MIT 
