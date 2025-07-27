@@ -1,4 +1,4 @@
-import AsyncTasksQueue from '@/AsyncTasksQueue';
+import AsyncTasksQueue from '#src/AsyncTasksQueue.js';
 
 describe('AsyncQueue should work', () => {
 

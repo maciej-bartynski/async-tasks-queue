@@ -1,9 +1,9 @@
 {
     "compilerOptions": {
-        "module": "commonjs",
-        "esModuleInterop": true,
-        "target": "es6",
-        "moduleResolution": "node",
+        "module": "nodenext",
+        "esModuleInterop": false,
+        "target": "es2024",
+        "moduleResolution": "NodeNext",
         "sourceMap": true,
         "outDir": "dist",
         "baseUrl": ".",
@@ -13,13 +13,13 @@
         "skipLibCheck": true,
         "forceConsistentCasingInFileNames": true,
         "paths": {
-            "@/*": [
+            "#src/*": [
                 "src/*"
             ],
-            "@tests/*": [
+            "tests/*": [
                 "tests/*"
             ]
-        }
+        },
     },
     "include": [
         "src/**/*",

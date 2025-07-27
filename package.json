@@ -4,15 +4,20 @@
   "description": "A simple and efficient async tasks queue for Node.js with TypeScript support",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "type": "module",
+  "imports": {
+    "#src/*.js": "./dist/src/*.js",
+    "#src/**/*.js": "./dist/src/**/*.js"
+  },
   "files": [
     "dist",
     "README.md"
   ],
   "scripts": {
-    "build": "tsc --project ./tsconfig.build.json --pretty",
-    "test": "jest --detectOpenHandles --runInBand",
+    "build": "tsc --pretty",
+    "test": "vitest --run",
     "prepublishOnly": "npm run build",
-    "dev": "jest --watch --detectOpenHandles --runInBand"
+    "dev": "tsc --watch --pretty"
   },
   "keywords": [
     "async",
@@ -40,6 +45,7 @@
     "@types/jest": "^30.0.0",
     "jest": "^30.0.4",
     "ts-jest": "^29.4.0",
-    "typescript": "^5.8.3"
+    "typescript": "^5.8.3",
+    "vitest": "^3.2.4"
   }
 }
