@@ -1,5 +1,8 @@
 {
     "compilerOptions": {
+        "types": [
+            "vitest/globals"
+        ],
         "module": "nodenext",
         "esModuleInterop": false,
         "target": "es2024",
