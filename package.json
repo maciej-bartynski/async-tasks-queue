@@ -1,6 +1,6 @@
 {
   "name": "@bartek01001/async-tasks-queue",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "A simple and efficient async tasks queue for Node.js with TypeScript support",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
