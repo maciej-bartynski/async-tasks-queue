@@ -1,130 +1,258 @@
-# Async Tasks Queue - AI Development Guide
+# Development Guide
 
-## Package Overview
+This document provides comprehensive technical guidance for developing, maintaining, and deploying the Async Tasks Queue project.
 
-**async-tasks-queue** is a TypeScript npm package that provides a simple and efficient sequential task queue for Node.js. It ensures that async tasks are executed one after another, regardless of when they are enqueued.
+## Project Overview
 
-### Core Functionality
-- **Sequential Execution**: All tasks are processed in the order they were added
-- **Promise-based**: Returns promises that resolve with task results
-- **Error Handling**: Properly propagates errors from failed tasks
-- **TypeScript Support**: Full type definitions included
+**Type**: NPM Package (TypeScript)  
+**Purpose**: Sequential async task execution for Node.js  
+**Package**: `@bartek01001/async-tasks-queue`  
+**Version**: 2.0.0  
+
+## Technical Stack
+
+- **Language**: TypeScript 5.8.3
+- **Target**: ES2024 with NodeNext module resolution
+- **Build Tool**: TypeScript Compiler (tsc)
+- **Testing**: Vitest 3.2.4
+- **Package Manager**: NPM
+- **Module System**: ESM (ES Modules)
+
+## Development Setup
+
+### Prerequisites
+
+- Node.js (version 18 or higher)
+- NPM (comes with Node.js)
+
+### Local Development Setup
+
+1. **Clone and Install Dependencies**
+   ```bash
+   git clone https://github.com/maciej-bartynski/async-tasks-queue.git
+   cd async-tasks-queue
+   npm install
+   ```
+
+2. **Verify Installation**
+   ```bash
+   npm run build
+   npm test
+   ```
+
+## Development Workflow
+
+### Available Scripts
+
+| Script | Purpose | Command |
+|--------|---------|---------|
+| `build` | Compile TypeScript to JavaScript | `npm run build` |
+| `test` | Run test suite | `npm test` |
+| `dev` | Watch mode for development | `npm run dev` |
+| `prepublishOnly` | Build before publishing | `npm run prepublishOnly` |
+
+### Development Mode
+
+**Watch Mode Development:**
+```bash
+npm run dev
+```
+This runs TypeScript compiler in watch mode, automatically rebuilding when files change.
+
+**Manual Build:**
+```bash
+npm run build
+```
+Compiles TypeScript source files to the `dist/` directory.
+
+### Testing
+
+**Run Tests:**
+```bash
+npm test
+```
+
+**Test Configuration:**
+- **Framework**: Vitest 3.2.4
+- **Environment**: Node.js
+- **Execution**: Single-threaded (sequential)
+- **Timeout**: 10 seconds per test
+- **Pattern**: `tests/**/*.test.ts`
+
+**Test Structure:**
+- Tests are located in `tests/AsyncQueue.test.ts`
+- Tests verify sequential execution behavior
+- Tests include performance and concurrency scenarios
+- All tests use deterministic assertions
+
+## Build Process
+
+### TypeScript Configuration
+
+**File**: `tsconfig.json`
+
+**Key Settings:**
+- **Target**: ES2024
+- **Module**: NodeNext
+- **Module Resolution**: NodeNext
+- **Output**: `dist/` directory
+- **Source Maps**: Enabled
+- **Declarations**: Enabled with maps
+- **Strict Mode**: Enabled
+
+**Path Mapping:**
+- `#src/*` → `src/*` (source files)
+- `tests/*` → `tests/*` (test files)
+
+### Build Output
+
+**Structure:**
+```
+dist/
+├── index.js              # Main entry point
+├── index.d.ts            # Type definitions
+├── src/
+│   └── AsyncTasksQueue.js
+└── tests/
+    └── AsyncQueue.test.js
+```
+
+**Source Maps**: All files include `.map` files for debugging.
 
 ## Project Structure
 
 ```
 async-tasks-queue/
 ├── src/
-│   └── AsyncTasksQueue.ts     # Main class implementation
+│   └── AsyncTasksQueue.ts    # Core implementation
 ├── tests/
-│   └── AsyncQueue.test.ts     # Comprehensive test suite
-├── dist/                      # Compiled JavaScript + type definitions
-├── index.ts                   # Main export file
-├── package.json               # NPM package configuration
-├── tsconfig.json              # TypeScript config (development + tests)
-├── tsconfig.build.json        # TypeScript config (production build)
-├── jest.config.js             # Jest test configuration
-└── README.md                  # User documentation
+│   └── AsyncQueue.test.ts    # Test suite
+├── docs/
+│   ├── DEVELOPMENT.md        # This file
+│   └── task-log.md          # Fadro workflow log
+├── dist/                     # Built files (generated)
+├── index.ts                  # Main entry point
+├── package.json             # Package configuration
+├── tsconfig.json            # TypeScript configuration
+├── vitest.config.ts         # Test configuration
+└── README.md                # Package documentation
 ```
 
-## Configuration Files
+## Publishing Workflow
 
-### TypeScript Configuration
+### Pre-publish Steps
 
-**tsconfig.json** (Development + Tests):
-- Includes both `src/` and `tests/` directories
-- Enables path aliases: `@/*` → `src/*`, `@tests/*` → `tests/*`
-- Generates source maps and declaration maps
-- Strict type checking enabled
+1. **Build Package**
+   ```bash
+   npm run build
+   ```
 
-**tsconfig.build.json** (Production Build):
-- Excludes `tests/` directory
-- Only compiles source code for npm package
-- Used by `npm run build` command
+2. **Run Tests**
+   ```bash
+   npm test
+   ```
 
-### Jest Configuration
+3. **Verify Package Contents**
+   ```bash
+   npm pack --dry-run
+   ```
 
-**jest.config.js**:
-- Uses `ts-jest` for TypeScript support
-- Maps path aliases for tests: `@/` → `src/`
-- Node.js test environment
+### Publishing
 
-## Available Commands
-
-### Development Commands
+**Publish to NPM:**
 ```bash
-npm run dev          # Run tests in watch mode
-npm test             # Run tests once
-npm run build        # Compile TypeScript to dist/
+npm publish
 ```
 
-### Publishing Commands
-```bash
-npm run prepublishOnly  # Auto-runs before npm publish
-npm pack               # Create local package for testing
-npm publish            # Publish to npm registry
-```
+**Package Configuration:**
+- **Access**: Public
+- **Files**: `dist/`, `README.md`
+- **Main**: `dist/index.js`
+- **Types**: `dist/index.d.ts`
+- **Module Type**: ESM
 
-## Working with the Package
+### Version Management
 
-### For AI Assistants
+**Current Version**: 2.0.0  
+**Versioning**: Semantic Versioning (SemVer)  
+**Registry**: NPM Public Registry  
 
-**When modifying the source code:**
-1. **Location**: All source code is in `src/AsyncTasksQueue.ts`
-2. **Exports**: Main export is in `index.ts`
-3. **Testing**: Always run `npm test` after changes
-4. **Building**: Use `npm run build` to compile changes
+## Environment Variables
 
-**When adding new features:**
-1. **Implementation**: Add to `src/AsyncTasksQueue.ts`
-2. **Tests**: Add corresponding tests in `tests/AsyncQueue.test.ts`
-3. **Types**: Ensure TypeScript types are properly defined
-4. **Documentation**: Update `README.md` if API changes
+**No environment variables required** - this package has no external dependencies or configuration.
 
-**When fixing bugs:**
-1. **Reproduce**: Create test case in `tests/AsyncQueue.test.ts`
-2. **Fix**: Modify `src/AsyncTasksQueue.ts`
-3. **Verify**: Run `npm test` to ensure all tests pass
-4. **Build**: Run `npm run build` to compile
+## Concurrency and Performance
 
-### Key Implementation Details
+### Single-Threaded Execution
 
-**AsyncTasksQueue Class:**
-- **Private queue**: Array of task objects with resolve/reject functions
-- **Private processing**: Boolean flag to prevent concurrent processing
-- **enqueue()**: Adds task to queue and triggers processing
-- **process()**: Sequential task execution loop
+- **Test Execution**: Vitest runs tests sequentially (single thread)
+- **Queue Processing**: Tasks are processed one at a time
+- **No Parallel Processing**: Intentionally sequential for predictable behavior
 
-**Path Aliases:**
-- `@/AsyncTasksQueue` → `src/AsyncTasksQueue.ts`
-- `@tests/*` → `tests/*`
-- Configured in both TypeScript and Jest
+### Performance Considerations
 
-**Test Strategy:**
-- Tests verify sequential execution order
-- Tests check queue state management
-- Tests validate timing (tasks execute in sequence, not parallel)
-- Tests cover error handling scenarios
-
-## Package Publishing Workflow
-
-1. **Development**: Make changes in `src/`
-2. **Testing**: Run `npm test` to verify functionality
-3. **Building**: Run `npm run build` to compile to `dist/`
-4. **Packaging**: Run `npm pack` to test package contents
-5. **Publishing**: Run `npm publish` to release
-
-## Important Notes for AI
-
-- **Always test changes**: The test suite is comprehensive and catches edge cases
-- **Maintain backward compatibility**: This is a utility library used by other projects
-- **Follow TypeScript best practices**: Use strict typing and proper error handling
-- **Keep it simple**: The package should remain lightweight and focused
-- **Documentation**: Update README.md for any API changes
+- **Memory Usage**: Minimal - only stores task references
+- **Processing**: O(1) enqueue, O(n) processing where n = queue length
+- **Error Handling**: Errors don't stop queue processing
 
 ## Dependencies
 
-**Production**: Zero dependencies (completely self-contained)
-**Development**: TypeScript, Jest, ts-jest, type definitions
+### Production Dependencies
+**None** - Zero runtime dependencies.
 
-The package is designed to be lightweight with zero production dependencies for maximum compatibility and minimal footprint.
+### Development Dependencies
+
+| Package | Version | Purpose |
+|---------|---------|---------|
+| `@bartek01001/fadro` | ^4.0.0 | Development workflow framework |
+| `@types/node` | ^24.1.0 | Node.js type definitions |
+| `typescript` | ^5.8.3 | TypeScript compiler |
+| `vitest` | ^3.2.4 | Testing framework |
+
+## Code Standards
+
+### TypeScript Guidelines
+
+- **Strict Mode**: Enabled for all files
+- **No Implicit Any**: All types must be explicit
+- **ESM Modules**: Use `import/export` syntax
+- **Type Definitions**: All public APIs must have types
+
+### Code Organization
+
+- **Single Responsibility**: One class per file
+- **No Comments**: Code must be self-explanatory
+- **English Only**: All code in English
+- **Test Coverage**: All code must be tested
+
+### File Naming
+
+- **Classes**: PascalCase (e.g., `AsyncTasksQueue`)
+- **Files**: PascalCase for classes, kebab-case for others
+- **Tests**: `*.test.ts` suffix
+
+## Troubleshooting
+
+### Common Issues
+
+**Build Errors:**
+- Ensure TypeScript 5.8.3+ is installed
+- Check `tsconfig.json` configuration
+- Verify all imports use `.js` extensions
+
+**Test Failures:**
+- Tests are deterministic - failures indicate actual issues
+- Check timeout settings (10 seconds per test)
+- Verify single-threaded execution
+
+**Import Issues:**
+- Use `.js` extensions in imports (not `.ts`)
+- Ensure proper path mapping in `tsconfig.json`
+- Check module resolution settings
+
+### Development Tips
+
+1. **Use Watch Mode**: `npm run dev` for automatic rebuilding
+2. **Test Frequently**: Run `npm test` after changes
+3. **Check Types**: TypeScript will catch type errors during build
+4. **Verify Exports**: Ensure `index.ts` properly exports the main class
